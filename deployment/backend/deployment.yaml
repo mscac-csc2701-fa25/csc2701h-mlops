@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fastapi-mlops-backend
+  labels:
+    app: fastapi-mlops-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fastapi-mlops-backend
+  template:
+    metadata:
+      labels:
+        app: fastapi-mlops-backend
+    spec:
+      containers:
+        - name: fastapi-mlops-backend
+          image: fastapi-mlops-backend:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8000
+          env:
+            - name: HOST
+              value: "0.0.0.0"
+            - name: PORT
+              value: "8000"
+            - name: ENVIRONMENT
+              value: "production"
+            - name: LOG_LEVEL
+              value: "info"

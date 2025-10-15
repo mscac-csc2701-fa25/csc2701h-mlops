@@ -1,0 +1,19 @@
+name: mlops-backend
+channels:
+  - conda-forge
+  - defaults
+
+dependencies:
+  - python=3.10
+  - pip
+  - fastapi
+  - uvicorn
+  - pydantic
+  - numpy
+  - pillow
+  - scikit-learn
+  - pytorch          # PyTorch (correct spelling)
+  - pip:
+      - python-multipart    # Enables image upload in FastAPI
+      - mlflow              # For model tracking & loading
+      - gunicorn            # Production server for FastAPI

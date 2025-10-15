@@ -1,0 +1,24 @@
+# Use official slim Python image
+FROM python:3.10-slim
+
+# Set working directory inside the container
+WORKDIR /app
+
+# Copy requirements.txt and install dependencies
+COPY backend/requirements.txt .
+
+RUN pip install --upgrade pip && pip install --no-cache-dir --root-user-action=ignore uv
+
+# Copy backend source code into container's /app directory
+COPY ./backend /app
+
+RUN uv pip install --system -r requirements.txt
+
+# Expose FastAPI's port
+EXPOSE 8000
+
+# Run uvicorn server (adjust app path if needed)
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+
+# docker build -f backend/dockerfile -t fastapi-mlops-backend .
+# docker run -p 8000:8000 fastapi-mlops-backend 
