@@ -245,3 +245,7 @@ test-results/
 *.exe
 *.dll
 
+data/processed/
+mlruns
+runs
+yolo11n.pt
