@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Image Predict</title>
+    <style>
+      body { font-family: Arial, sans-serif; margin: 2rem; }
+      .preview { max-width: 600px; margin-top: 1rem; }
+      .detections { margin-top: 1rem; }
+      .detections li { margin-bottom: 0.25rem; }
+    </style>
+  </head>
+  <body>
+    <h1>Upload Image for Prediction</h1>
+    <form action="/predict" method="post" enctype="multipart/form-data">
+      <input type="file" name="image" accept="image/*" required>
+      <button type="submit">Predict</button>
+    </form>
+
+    {% if result_image %}
+      <h2>Result</h2>
+      <img class="preview" src="{{ result_image }}" alt="prediction">
+
+      <div class="detections">
+        <h3>Detections</h3>
+        {% if detections and detections|length > 0 %}
+          <ul>
+            {% for name, conf in detections %}
+              <li><strong>{{ name }}</strong>: {{ "{:.2f}".format(conf) }}</li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          <p>No detections above threshold.</p>
+        {% endif %}
+      </div>
+    {% endif %}
+  </body>
+</html>
