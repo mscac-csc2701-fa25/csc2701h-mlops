@@ -10,10 +10,16 @@ parser.add_argument(
     help="Path to the input image",
     default="data/processed/val/images/PublicDataset00510.jpg"
 )
+parser.add_argument(
+    "--model_path",
+    type=str,
+    help="Path to the model",
+    default="src/models/fire_smoke.pt"
+)
 args = parser.parse_args()
 
 # load model
-model = YOLO("src/models/fire_smoke.pt")
+model = YOLO(args.model_path)
 
 # load image
 img_path = args.image_path
