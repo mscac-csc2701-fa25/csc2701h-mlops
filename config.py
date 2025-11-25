@@ -5,3 +5,8 @@ load_dotenv()
 
 MLFLOW_SERVER = os.getenv("MLFLOW_SERVER")
 DATA_YAML = "data/processed/data.yaml"
+
+BUCKET = 'smoke-fire-detection-bucket'
+BATCH_SIZE = 2
+INCOMING_PREFIX = 'datasets/incoming/raw/'
+PROCESSED_PREFIX = 'datasets/incoming/processed/'
