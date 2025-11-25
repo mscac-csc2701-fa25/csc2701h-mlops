@@ -1,0 +1,18 @@
+apiVersion: serving.kserve.io/v1beta1
+kind: InferenceService
+metadata:
+  name: yolov8-inference
+  namespace: default   # or mlops if you created that
+spec:
+  predictor:
+    model:
+      modelFormat:
+        name: pytorch
+      storageUri: "gs://kfserving-examples/models/torchscript/mnist"
+      resources:
+        requests:
+          cpu: "1"
+          memory: "2Gi"
+        limits:
+          cpu: "2"
+          memory: "4Gi"
