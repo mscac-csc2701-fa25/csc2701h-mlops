@@ -41,7 +41,7 @@ def main():
     print("="*60 + "\n")
     
     deployment = test1.from_source(
-        source="https://github.com/mscac-csc2701-fa25/csc2701h-mlops",
+        source="https://github.com/mscac-csc2701-fa25/csc2701h-mlops/tree/sthk206/prefect",
         entrypoint="prefect_flows.flows.run_all_2.py:test1"
     ).deploy(
         name="test_1",
