@@ -3,37 +3,205 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Image Predict</title>
+    <title>Fire & Smoke Detection</title>
     <style>
-      body { font-family: Arial, sans-serif; margin: 2rem; }
-      .preview { max-width: 600px; margin-top: 1rem; }
-      .detections { margin-top: 1rem; }
-      .detections li { margin-bottom: 0.25rem; }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      
+      body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        padding: 2rem;
+        color: #333;
+      }
+      
+      .container {
+        max-width: 900px;
+        margin: 0 auto;
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        padding: 3rem;
+      }
+      
+      h1 {
+        color: #667eea;
+        margin-bottom: 1.5rem;
+        font-size: 2.5rem;
+        text-align: center;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      
+      h2 {
+        color: #764ba2;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+        font-size: 1.8rem;
+        border-bottom: 3px solid #667eea;
+        padding-bottom: 0.5rem;
+      }
+      
+      h3 {
+        color: #555;
+        margin-bottom: 1rem;
+        font-size: 1.3rem;
+      }
+      
+      form {
+        background: #f8f9fa;
+        padding: 2rem;
+        border-radius: 12px;
+        margin-bottom: 2rem;
+        border: 2px dashed #667eea;
+        text-align: center;
+      }
+      
+      input[type="file"] {
+        display: block;
+        margin: 0 auto 1.5rem;
+        padding: 1rem;
+        font-size: 1rem;
+        border: 2px solid #ddd;
+        border-radius: 8px;
+        background: white;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+      
+      input[type="file"]:hover {
+        border-color: #667eea;
+        box-shadow: 0 2px 8px rgba(102, 126, 234, 0.2);
+      }
+      
+      button {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        padding: 1rem 3rem;
+        font-size: 1.1rem;
+        font-weight: bold;
+        border-radius: 50px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+      }
+      
+      button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+      }
+      
+      button:active {
+        transform: translateY(0);
+      }
+      
+      .preview {
+        max-width: 100%;
+        margin-top: 1.5rem;
+        border-radius: 12px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      
+      .detections {
+        margin-top: 2rem;
+        background: #f8f9fa;
+        padding: 2rem;
+        border-radius: 12px;
+        border-left: 5px solid #667eea;
+      }
+      
+      .detections ul {
+        list-style: none;
+        padding: 0;
+      }
+      
+      .detections li {
+        background: white;
+        margin-bottom: 1rem;
+        padding: 1rem 1.5rem;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: all 0.3s ease;
+      }
+      
+      .detections li:hover {
+        transform: translateX(5px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      }
+      
+      .detections li strong {
+        color: #667eea;
+        font-size: 1.1rem;
+      }
+      
+      .detections li:last-child {
+        margin-bottom: 0;
+      }
+      
+      .detections p {
+        color: #666;
+        font-style: italic;
+        text-align: center;
+        padding: 1rem;
+      }
+      
+      @media (max-width: 768px) {
+        .container {
+          padding: 1.5rem;
+        }
+        
+        h1 {
+          font-size: 1.8rem;
+        }
+        
+        h2 {
+          font-size: 1.4rem;
+        }
+        
+        button {
+          padding: 0.8rem 2rem;
+        }
+      }
     </style>
   </head>
   <body>
-    <h1>Upload Image for Prediction</h1>
-    <form action="/predict" method="post" enctype="multipart/form-data">
-      <input type="file" name="image" accept="image/*" required>
-      <button type="submit">Predict</button>
-    </form>
+    <div class="container">
+      <h1>🔥 Fire & Smoke Detection</h1>
+      <form action="/predict" method="post" enctype="multipart/form-data">
+        <input type="file" name="image" accept="image/*" required>
+        <button type="submit">🔍 Analyze Image</button>
+      </form>
 
-    {% if result_image %}
-      <h2>Result</h2>
-      <img class="preview" src="{{ result_image }}" alt="prediction">
+      {% if result_image %}
+        <h2>📊 Detection Results</h2>
+        <img class="preview" src="{{ result_image }}" alt="prediction">
 
-      <div class="detections">
-        <h3>Detections</h3>
-        {% if detections and detections|length > 0 %}
-          <ul>
-            {% for name, conf in detections %}
-              <li><strong>{{ name }}</strong>: {{ "{:.2f}".format(conf) }}</li>
-            {% endfor %}
-          </ul>
-        {% else %}
-          <p>No detections above threshold.</p>
-        {% endif %}
-      </div>
-    {% endif %}
+        <div class="detections">
+          <h3>🎯 Detected Objects</h3>
+          {% if detections and detections|length > 0 %}
+            <ul>
+              {% for name, conf in detections %}
+                <li>
+                  <strong>{{ name }}</strong>
+                  <span>{{ "{:.1f}".format(conf * 100) }}% confidence</span>
+                </li>
+              {% endfor %}
+            </ul>
+          {% else %}
+            <p>No detections above threshold.</p>
+          {% endif %}
+        </div>
+      {% endif %}
+    </div>
   </body>
 </html>
