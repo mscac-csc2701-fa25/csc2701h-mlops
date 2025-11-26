@@ -246,3 +246,7 @@ test-results/
 *.dll
 venv
 mlruns/
+backend/model_metadata/
+backend/runs/
+backend/uploads/
+__pycache__/

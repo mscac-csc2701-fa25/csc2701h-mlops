@@ -20,5 +20,6 @@ EXPOSE 8000
 # Run uvicorn server (adjust app path if needed)
 CMD ["uvicorn", "backend.app.main:app", "--host", "0.0.0.0", "--port", "8000"]
 
+# Python 3.12.11
 # docker build -f backend/dockerfile -t fastapi-mlops-backend-v2 .
 # docker run -p 8000:8000 fastapi-mlops-backend-v2 
