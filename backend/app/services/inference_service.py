@@ -1,13 +1,20 @@
 # services/inference_service.py
-from PIL import Image
-import numpy as np
-import io
 
-def run_inference(model, image_bytes):
-    image = Image.open(io.BytesIO(image_bytes)).convert('RGB')
-    # Preprocess image as needed for your model, e.g. resize, normalize
-    im_arr = np.array(image)
-    print(im_arr.shape)
-    # Dummy prediction, replace with model inference logic
-    prediction = model(im_arr)  # adapt for your model
-    return prediction
+import backend.app.utils.image_processing as img_proc
+import os
+
+def run_inference(model, output_dir, folder_path):
+    print(f"Running inference ...")
+    os.makedirs(output_dir, exist_ok=True)
+    all_files = os.listdir(folder_path)
+    image_files = [f for f in all_files if f.lower().endswith((".png", ".jpg", ".jpeg"))]
+
+    first_image_path = os.path.join(folder_path, image_files[0])
+    prediction = model.predict(first_image_path, conf=0.2, save=False)
+    annotated = img_proc.predict_to_image(prediction, model)
+    
+    out_path = output_dir+"output.jpg"
+    with open(out_path, "wb") as f:
+        f.write(annotated)
+    # shutil.rmtree("backend/uploads")
+    return True

@@ -1,9 +1,9 @@
 # app/main.py
 from fastapi import FastAPI
-from app.routes.uploads import router as uploads_router
-from app.routes.predict import router as predict_router
+from backend.app.routes.predict import router as predict_router
+from backend.app.routes.load_model import router as load_model_router
 import uvicorn
-from app.config import API_HOST, API_PORT
+from backend.app.config import API_HOST, API_PORT
 
 # FastAPI app with root_path
 app = FastAPI(
@@ -15,8 +15,8 @@ app = FastAPI(
 )
 
 # Include your routers
-app.include_router(uploads_router)
 app.include_router(predict_router)
+app.include_router(load_model_router)
 
 # Optional: Health endpoint
 @app.get("/health", tags=["Health"])

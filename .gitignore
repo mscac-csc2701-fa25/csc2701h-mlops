@@ -244,4 +244,5 @@ test-results/
 *.so
 *.exe
 *.dll
-
+venv
+mlruns/
